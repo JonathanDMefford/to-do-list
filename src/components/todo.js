@@ -1,5 +1,6 @@
 import React from 'react';
 import ButtonGroup from './buttongroup';
+import ClearButton from './clearbtn'
 
 
 
@@ -18,9 +19,10 @@ class TodoApp extends React.Component {
                     <div className='col-2'>
                     </div>
                     <div className='col-8 mx-auto'>
-                        <h1 className='text-center mt-5'>To Do List</h1>
+                        <h1 className='text-center mb-1 mt-5'>To Do List</h1>
+                        <ButtonGroup className='mb-3' />
                         <TodoList items={this.state.items} />
-                        <form className='text-center' onSubmit={this.handleSubmit}>
+                        <form className='text-center my-4' onSubmit={this.handleSubmit}>
                             {/* <label htmlFor="new-todo">
                                 Add a to do item.
                             </label> */}
@@ -34,7 +36,7 @@ class TodoApp extends React.Component {
                                 Add #{this.state.items.length + 1}
                             </button>
                         </form>
-                        <ButtonGroup />
+                        <ClearButton />
                     </div>
                 </div>
                 <div className='col-2'>
@@ -67,7 +69,7 @@ class TodoApp extends React.Component {
 class TodoList extends React.Component {
     render() {
         return (
-            <ul>
+            <ul className='ml-3'>
                 {this.props.items.map(item => (
                     <li key={item.id}>{item.text}</li>
                 ))}
