@@ -10,6 +10,7 @@ class TodoApp extends React.Component {
         this.state = { items: [], text: '' };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+
     }
 
     render() {
@@ -18,7 +19,7 @@ class TodoApp extends React.Component {
                 <div className='row'>
                     <div className='col-2'>
                     </div>
-                    <div className='col-8 mx-auto'>
+                    <div className='col-8'>
                         <h1 className='text-center mb-1 mt-5'>To Do List</h1>
                         <ButtonGroup className='mb-3' />
                         <TodoList items={this.state.items} />
@@ -45,6 +46,10 @@ class TodoApp extends React.Component {
         );
     }
 
+    componentDidMount() {
+        window.localStorage.getItem('items', JSON.stringify(this.state.items));
+    }
+
     handleChange(e) {
         this.setState({ text: e.target.value });
     }
@@ -69,7 +74,7 @@ class TodoApp extends React.Component {
 class TodoList extends React.Component {
     render() {
         return (
-            <ul className='ml-3'>
+            <ul className='ml-5'>
                 {this.props.items.map(item => (
                     <li key={item.id}>{item.text}</li>
                 ))}
