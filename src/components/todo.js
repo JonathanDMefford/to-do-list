@@ -7,11 +7,11 @@ import ClearButton from './clearbtn'
 class TodoApp extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { items: [], text: '' };
+        this.state = { items: [], 
+            text: '',
+            finished: false};
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        // this.clearAll = this.clearAll.bind(this);
-
     }
 
     render() {
@@ -38,7 +38,7 @@ class TodoApp extends React.Component {
                                 Add #{this.state.items.length + 1}
                             </button>
                         </form>
-                        <ClearButton />
+                        <ClearButton parentFunction={this.clearAll.bind(this)}/>
                     </div>
                 </div>
                 <div className='col-2'>
@@ -80,10 +80,11 @@ class TodoApp extends React.Component {
         window.localStorage.setItem('newtodo', JSON.stringify(this.state.items));
     }
 
-    // clearAll(e) {
-    //     e.preventDefault();
-    //     window.localStorage.clear();
-    // }
+    clearAll() {
+        this.setState({
+            items: [],
+        });
+    }
 }
 
 
