@@ -10,6 +10,7 @@ class TodoApp extends React.Component {
         this.state = { items: [], text: '' };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        // this.clearAll = this.clearAll.bind(this);
 
     }
 
@@ -46,10 +47,9 @@ class TodoApp extends React.Component {
         );
     }
 
-    componentDidMount() {
-        window.localStorage.getItem('items', JSON.stringify(this.state.items));
-    }
 
+
+    //send new todo items to local storage
     handleChange(e) {
         this.setState({ text: e.target.value });
     }
@@ -68,6 +68,22 @@ class TodoApp extends React.Component {
             text: ''
         }));
     }
+
+    componentDidMount() {
+        var newTodolist = JSON.parse(localStorage.getItem('newtodo')) || [];
+        this.setState({
+            items: newTodolist
+        });
+    }
+
+    componentDidUpdate() {
+        window.localStorage.setItem('newtodo', JSON.stringify(this.state.items));
+    }
+
+    // clearAll(e) {
+    //     e.preventDefault();
+    //     window.localStorage.clear();
+    // }
 }
 
 
