@@ -1,15 +1,18 @@
 import React from 'react';
 import ButtonGroup from './buttongroup';
 import ClearButton from './clearbtn'
+import './todo.css';
 
 
 
 class TodoApp extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { items: [], 
+        this.state = {
+            items: [],
             text: '',
-            finished: false};
+            finished: null
+        };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
     }
@@ -38,7 +41,7 @@ class TodoApp extends React.Component {
                                 Add #{this.state.items.length + 1}
                             </button>
                         </form>
-                        <ClearButton parentFunction={this.clearAll.bind(this)}/>
+                        <ClearButton parentFunction={this.clearAll.bind(this)} />
                     </div>
                 </div>
                 <div className='col-2'>
@@ -61,7 +64,8 @@ class TodoApp extends React.Component {
         }
         const newItem = {
             text: this.state.text,
-            id: Date.now()
+            id: Date.now(),
+            finished: false
         };
         this.setState(state => ({
             items: state.items.concat(newItem),
@@ -91,11 +95,21 @@ class TodoApp extends React.Component {
 class TodoList extends React.Component {
     render() {
         return (
-            <ul className='ml-5'>
+            <div>
                 {this.props.items.map(item => (
-                    <li key={item.id}>{item.text}</li>
+                    <div key={item.id} class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="checkbox" aria-label="Checkbox for following text input" />
+                            </div>
+                        </div>
+                        <input type="text" value={item.text} disabled class="form-control" aria-label="Text input with checkbox" />
+                        <div class="input-group-append">
+                            <span class="btn btn-danger">X</span>
+                        </div>
+                    </div>
                 ))}
-            </ul>
+            </div>
         );
     }
 }
