@@ -15,6 +15,7 @@ class TodoApp extends React.Component {
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.taskFinish = this.taskFinish.bind(this);
     }
 
     render() {
@@ -89,6 +90,15 @@ class TodoApp extends React.Component {
             items: [],
         });
     }
+
+    //have checkbox change state of finished from false to true on click
+    //have X button delete the current item from the list on click
+
+    taskFinish(e) {
+        this.setState({
+            finished: true,
+        });
+    }
 }
 
 
@@ -97,15 +107,15 @@ class TodoList extends React.Component {
         return (
             <div>
                 {this.props.items.map(item => (
-                    <div key={item.id} class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <input type="checkbox" aria-label="Checkbox for following text input" />
+                    <div key={item.id} className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <div className="input-group-text">
+                                <input type="checkbox" onClick={console.log('i am finished')} aria-label="Checkbox for following text input" />
                             </div>
                         </div>
-                        <input type="text" value={item.text} disabled class="form-control" aria-label="Text input with checkbox" />
-                        <div class="input-group-append">
-                            <span class="btn btn-danger">X</span>
+                        <input type="text" value={item.text} disabled className="form-control" aria-label="Text input with checkbox" />
+                        <div className="input-group-append">
+                            <span className="btn btn-danger">X</span>
                         </div>
                     </div>
                 ))}
