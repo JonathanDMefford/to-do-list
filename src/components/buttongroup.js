@@ -35,9 +35,9 @@ class ButtonGroup extends React.Component {
         return (
             <div>
                 <div className='row mx-auto justify-content-center my-3'>
-                    <button type='button' className='btn btn-primary' onClick={this.handleAll}>All</button>
-                    <button type='button' className='btn btn-warning ml-2' onClick={this.handleLeft}>Unfinished</button>
-                    <button type='button' className='btn btn-success mx-2' onClick={this.handleDone}>Completed</button>
+                    <button type='button' id='all' className='btn btn-primary' onClick={this.handleAll}>All</button>
+                    <button type='button' id='left' className='btn btn-warning ml-2' onClick={this.handleLeft}>Unfinished</button>
+                    <button type='button' id='done' className='btn btn-success mx-2' onClick={this.handleDone}>Completed</button>
                 </div>
             </div>
         );

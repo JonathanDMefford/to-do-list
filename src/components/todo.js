@@ -11,6 +11,7 @@ class TodoApp extends React.Component {
         this.state = {
             items: [],
             text: '',
+            view: 'all',
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -90,9 +91,6 @@ class TodoApp extends React.Component {
         });
     }
 
-    //have checkbox change state of finished from false to true on click
-    //have X button delete the current item from the list on click
-
     taskFinish(e) {
         let doneList = this.state.items.map((item, i) => {
             if (Number(e.target.id) === item.id) {
@@ -108,6 +106,15 @@ class TodoApp extends React.Component {
     //deleteItem - deletes item from list after clicked
     //setView - view string
     //conditional rendering
+    changeView() {
+        //take event.target.id - set state view = id
+        //filter through list to see if finished or not 
+        //if this.state.view == 'all' {set viewList to items}
+        //if this.state.view == 'left' {set viewList to filter(items)}
+        //if this.state.view == 'done' {set viewList to filter(items)}
+        let viewList = this.state.items
+    }
+
 }
 
 
