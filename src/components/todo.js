@@ -11,7 +11,6 @@ class TodoApp extends React.Component {
         this.state = {
             items: [],
             text: '',
-            finished: null
         };
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -27,7 +26,7 @@ class TodoApp extends React.Component {
                     <div className='col-8'>
                         <h1 className='text-center mb-1 mt-5'>To Do List</h1>
                         <ButtonGroup className='mb-3' />
-                        <TodoList items={this.state.items} />
+                        <TodoList items={this.state.items} handleCheck={this.taskFinish} />
                         <form className='text-center my-4' onSubmit={this.handleSubmit}>
                             {/* <label htmlFor="new-todo">
                                 Add a to do item.
@@ -95,10 +94,20 @@ class TodoApp extends React.Component {
     //have X button delete the current item from the list on click
 
     taskFinish(e) {
+        let doneList = this.state.items.map((item, i) => {
+            if (Number(e.target.id) === item.id) {
+                item.finished = e.target.checked
+            }
+            return item;
+        });
+        console.log(doneList);
         this.setState({
-            finished: true,
+            items: doneList,
         });
     }
+    //deleteItem - deletes item from list after clicked
+    //setView - view string
+    //conditional rendering
 }
 
 
@@ -110,12 +119,12 @@ class TodoList extends React.Component {
                     <div key={item.id} className="input-group mb-3">
                         <div className="input-group-prepend">
                             <div className="input-group-text">
-                                <input type="checkbox" onClick={console.log('i am finished')} aria-label="Checkbox for following text input" />
+                                <input type="checkbox" checked={item.finished} id={item.id} onChange={this.props.handleCheck} aria-label="Checkbox for following text input" />
                             </div>
                         </div>
                         <input type="text" value={item.text} disabled className="form-control" aria-label="Text input with checkbox" />
                         <div className="input-group-append">
-                            <span className="btn btn-danger">X</span>
+                            <span className="btn btn-danger" onClick={this.props.handleDelete}>X</span>
                         </div>
                     </div>
                 ))}
