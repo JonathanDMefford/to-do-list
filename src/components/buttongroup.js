@@ -19,15 +19,15 @@ class ButtonGroup extends React.Component {
     //Unfinished button that shows items with finished status of false
     //Completed button that shows items with finished status of true
     handleAll(e) {
-        //parentfunction filter showAll
+        this.props.changeView(e);
     }
 
     handleLeft(e) {
-        //parentfunction filter showLeft
+        this.props.changeView(e);
     }
 
     handleDone(e) {
-        //parentfunction filter showDone
+        this.props.changeView(e);
     }
 
     

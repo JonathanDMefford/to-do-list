@@ -16,9 +16,21 @@ class TodoApp extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.taskFinish = this.taskFinish.bind(this);
+        this.setView = this.setView.bind(this);
+        this.deleteItem = this.deleteItem.bind(this);
     }
 
     render() {
+
+        let viewList = this.state.items;
+        if (this.state.view === 'left') {
+            viewList = this.state.items.filter(item => item.finished === false);
+        }
+
+        else if (this.state.view === 'done') {
+            viewList = this.state.items.filter(item => item.finished === true);
+        }
+
         return (
             <div className='container mx-auto'>
                 <div className='row'>
@@ -26,8 +38,8 @@ class TodoApp extends React.Component {
                     </div>
                     <div className='col-8'>
                         <h1 className='text-center mb-1 mt-5'>To Do List</h1>
-                        <ButtonGroup className='mb-3' />
-                        <TodoList items={this.state.items} handleCheck={this.taskFinish} />
+                        <ButtonGroup className='mb-3' changeView={this.setView} />
+                        <TodoList items={viewList} handleCheck={this.taskFinish} handleDelete={this.deleteItem} />
                         <form className='text-center my-4' onSubmit={this.handleSubmit}>
                             {/* <label htmlFor="new-todo">
                                 Add a to do item.
@@ -52,8 +64,6 @@ class TodoApp extends React.Component {
     }
 
 
-
-    //send new todo items to local storage
     handleChange(e) {
         this.setState({ text: e.target.value });
     }
@@ -66,7 +76,8 @@ class TodoApp extends React.Component {
         const newItem = {
             text: this.state.text,
             id: Date.now(),
-            finished: false
+            finished: false,
+            view: 'all',
         };
         this.setState(state => ({
             items: state.items.concat(newItem),
@@ -98,25 +109,33 @@ class TodoApp extends React.Component {
             }
             return item;
         });
-        console.log(doneList);
+
         this.setState({
             items: doneList,
         });
     }
-    //deleteItem - deletes item from list after clicked
-    //setView - view string
-    //conditional rendering
-    changeView() {
-        //take event.target.id - set state view = id
-        //filter through list to see if finished or not 
-        //if this.state.view == 'all' {set viewList to items}
-        //if this.state.view == 'left' {set viewList to filter(items)}
-        //if this.state.view == 'done' {set viewList to filter(items)}
-        let viewList = this.state.items
+    
+    setView(e) {
+        let newView = this.state.view;
+        if (e.target.id == 'all') {
+            newView = 'all'
+        }
+        else if (e.target.id == 'left') {
+            newView = 'left'
+        }
+        else if (e.target.id == 'done') {
+            newView = 'done'
+        }
+
+        this.setState({
+            view: newView,
+        });
     }
 
+    deleteItem(e) {
+        //check button id with item id and remove from array
+    }
 }
-
 
 class TodoList extends React.Component {
     render() {
@@ -131,7 +150,7 @@ class TodoList extends React.Component {
                         </div>
                         <input type="text" value={item.text} disabled className="form-control" aria-label="Text input with checkbox" />
                         <div className="input-group-append">
-                            <span className="btn btn-danger" onClick={this.props.handleDelete}>X</span>
+                            <span className="btn btn-danger" id={item.id} onClick={this.props.handleDelete}>X</span>
                         </div>
                     </div>
                 ))}
